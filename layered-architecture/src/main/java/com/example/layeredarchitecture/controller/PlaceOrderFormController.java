@@ -442,17 +442,13 @@ public class PlaceOrderFormController {
                 pstm.setString(4, item.getCode());
 
                // if(!(pstm.executeUpdate() > 0))
-                */
 
-
-               /* if (!isItemUpdated) {
+                if (!isItemUpdated) {
                     connection.rollback();
                     connection.setAutoCommit(true);
                     return false;
-                }*/
 
-
-               /* connection.commit();
+                connection.commit();
                 connection.setAutoCommit(true);
                 return true;
              }*/
@@ -471,11 +467,6 @@ public class PlaceOrderFormController {
             }
         return false;
         }
-
-
-
-
-
         public ItemDTO findItem(String code) {
         try {
           /*  Connection connection = DBConnection.getDbConnection().getConnection();
@@ -495,6 +486,5 @@ public class PlaceOrderFormController {
         }
         return null;
     }
-
 
 }
