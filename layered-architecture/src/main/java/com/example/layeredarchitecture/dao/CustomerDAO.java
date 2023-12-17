@@ -2,6 +2,7 @@ package com.example.layeredarchitecture.dao;
 
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
+import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.view.tdm.CustomerTM;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,7 +25,6 @@ import java.util.List;
 public interface CustomerDAO {
     ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
 
-
      boolean saveCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException;
 
 
@@ -39,6 +39,11 @@ public interface CustomerDAO {
 
     ResultSet generateNewId() throws SQLException, ClassNotFoundException;
     //Changed
+
+    CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException;
+
+    public ArrayList <CustomerDTO> loadAllCustomerIds() throws SQLException, ClassNotFoundException;
+
 }
 
 
