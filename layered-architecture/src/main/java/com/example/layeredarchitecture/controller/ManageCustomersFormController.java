@@ -39,7 +39,7 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    CustomerDAO customerDAO=new CustomerDAOImpl();  //property injection 1
+    CustomerDAO customerDAO=new CustomerDAOImpl(); //property injection
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -79,13 +79,13 @@ public class ManageCustomersFormController {
                 tblCustomers.getItems().add(new CustomerTM(rst.getString("id"), rst.getString("name"), rst.getString("address")));
             }
           */
-            //CustomerDAO customerDAO=new CustomerDAOImpl();
+          //  CustomerDAO customerDAO=new CustomerDAOImpl();
             ArrayList<CustomerDTO> allCustomer=customerDAO.getAllCustomer();
             for (CustomerDTO dto:allCustomer) {
                 tblCustomers.getItems().add(
                         new CustomerTM(dto.getId(),
-                                       dto.getName(),
-                                       dto.getAddress())
+                                dto.getName(),
+                                dto.getAddress())
                 );
 
             }
@@ -166,15 +166,16 @@ public class ManageCustomersFormController {
                 pstm.setString(3, address);
                 pstm.executeUpdate();*/
 
-                 CustomerDTO dto=new CustomerDTO(id,name,address);
+                CustomerDTO dto=new CustomerDTO(id,name,address);
 
-            /*  CustomerDAO dao=new CustomerDAOImpl();
+              /*  CustomerDAO dao=new CustomerDAOImpl();
                 boolean isSaved=dao.saveCustomer(dto);*/
 
                 boolean isSaved=customerDAO.saveCustomer(dto);
-         if(isSaved) {
-             tblCustomers.getItems().add(new CustomerTM(id, name, address));
-         }
+
+                if(isSaved) {
+                    tblCustomers.getItems().add(new CustomerTM(id, name, address));
+                }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to save the customer " + e.getMessage()).show();
             } catch (ClassNotFoundException e) {
@@ -196,8 +197,7 @@ public class ManageCustomersFormController {
                 pstm.executeUpdate();*/
 
                 CustomerDTO dto = new CustomerDTO(id,name,address);
-
-               /* CustomerDAO dao = new CustomerDAOImpl();
+              /*  CustomerDAO dao = new CustomerDAOImpl();
                 dao.updateCustomer(dto);*/
 
                 customerDAO.updateCustomer(dto);
@@ -223,10 +223,10 @@ public class ManageCustomersFormController {
         pstm.setString(1, id);
         return pstm.executeQuery().next();*/
 
-       /* CustomerDAOImpl dao=new CustomerDAOImpl();
+     /*   CustomerDAOImpl dao=new CustomerDAOImpl();
         boolean isExist= dao.exitCustomer(id);*/
 
-         boolean isExist=customerDAO.exitCustomer(id);
+        boolean isExist=customerDAO.exitCustomer(id);
         if(isExist)
             return true;
         else
@@ -246,11 +246,12 @@ public class ManageCustomersFormController {
             pstm.setString(1, id);
             pstm.executeUpdate();*/
 
-        /* CustomerDAO dao=new CustomerDAOImpl();
+           /* CustomerDAO dao=new CustomerDAOImpl();
             customerDAO.deleteCustomer(id);
-             boolean isDeleted =dao.deleteCustomer(id);*/
+            boolean isDeleted =dao.deleteCustomer(id);*/
 
             boolean isDeleted=customerDAO.deleteCustomer(id);
+
             if(isDeleted) {
                 tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
                 tblCustomers.getSelectionModel().clearSelection();
@@ -269,7 +270,7 @@ public class ManageCustomersFormController {
         try {
            /* Connection connection = DBConnection.getDbConnection().getConnection();
             ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");*/
-            /*CustomerDAO customerDAO = new CustomerDAOImpl();
+          /*  CustomerDAO customerDAO = new CustomerDAOImpl();
             ResultSet rst = customerDAO.generateNewId();*/
 
             ResultSet rst=customerDAO.generateNewId();
