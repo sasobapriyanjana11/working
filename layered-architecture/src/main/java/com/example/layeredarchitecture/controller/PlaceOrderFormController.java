@@ -387,9 +387,7 @@ public class PlaceOrderFormController {
             stm.setString(1, orderId);
 
             /*if order id already exist*/
-            if (stm.executeQuery().next()) {
-
-            }
+            if (stm.executeQuery().next()) {}
 
             ordersDAO.getOrderId(orderId);
             isOrderSaved = ordersDAO.insertValueToOrders(orderId, orderDate, customerId);
