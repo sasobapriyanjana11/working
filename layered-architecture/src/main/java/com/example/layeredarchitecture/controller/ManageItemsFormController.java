@@ -41,6 +41,8 @@ public class ManageItemsFormController {
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
+    ItemDAO itemDAO=new ItemDAOImpl();
+
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
         tblItems.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -80,7 +82,7 @@ public class ManageItemsFormController {
             ResultSet rst = stm.executeQuery("SELECT * FROM Item");
 
            */
-            ItemDAO itemDAO=new ItemDAOImpl();
+           // ItemDAO itemDAO=new ItemDAOImpl();
             ArrayList<ItemDTO> allItem=itemDAO.loadAllItems();
             for (ItemDTO dto:allItem) {
                 tblItems.getItems().add(
@@ -154,8 +156,11 @@ public class ManageItemsFormController {
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
             pstm.setString(1, code);
             pstm.executeUpdate();*/
-           ItemDAO dao=new ItemDAOImpl();
-           boolean isDeleted=dao.deleteItem(code);
+
+          /* ItemDAO dao=new ItemDAOImpl();
+           boolean isDeleted=dao.deleteItem(code);*/
+
+            boolean isDeleted=itemDAO.deleteItem(code);
            if(isDeleted) {
                tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
                tblItems.getSelectionModel().clearSelection();
@@ -205,8 +210,10 @@ public class ManageItemsFormController {
                 pstm.executeUpdate();*/
 
                 ItemDTO dto=new ItemDTO(code,description,unitPrice,qtyOnHand);
-                ItemDAO dao=new ItemDAOImpl();
-                boolean isSaved=dao.saveItem(dto);
+              /*  ItemDAO dao=new ItemDAOImpl();
+                boolean isSaved=dao.saveItem(dto);*/
+
+                boolean isSaved=itemDAO.saveItem(dto);
                 if(isSaved) {
                     tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
                 }
@@ -231,7 +238,7 @@ public class ManageItemsFormController {
                 pstm.executeUpdate();*/
 
                   ItemDTO itemDTO=new ItemDTO(code,description,unitPrice,qtyOnHand);
-                  ItemDAO itemDAO=new ItemDAOImpl();
+                  //ItemDAO itemDAO=new ItemDAOImpl();
                   itemDAO.updateItem(itemDTO);
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
@@ -257,9 +264,10 @@ public class ManageItemsFormController {
         pstm.setString(1, code);
         return pstm.executeQuery().next();*/
 
-        ItemDAOImpl dao =new ItemDAOImpl();
-        return dao.exitItem(code);
+       /* ItemDAOImpl dao =new ItemDAOImpl();
+        return dao.exitItem(code);*/
 
+        return itemDAO.exitItem(code);
 
     }
 
@@ -268,8 +276,10 @@ public class ManageItemsFormController {
         try {
  /*           Connection connection = DBConnection.getDbConnection().getConnection();
             ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");*/
-            ItemDAOImpl itemDAO =new ItemDAOImpl();
-             ResultSet rst=itemDAO.generateId();
+           /* ItemDAOImpl itemDAO =new ItemDAOImpl();
+             ResultSet rst=itemDAO.generateId();*/
+
+            ResultSet rst=itemDAO.generateId();
 
             if (rst.next()) {
                 String id = rst.getString("code");
