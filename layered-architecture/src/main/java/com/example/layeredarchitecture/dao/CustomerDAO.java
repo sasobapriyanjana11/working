@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public interface CustomerDAO {
-    ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
+public interface CustomerDAO extends CrudDAO <CustomerDTO>{
+    /*ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
 
      boolean saveCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException;
 
@@ -42,7 +42,7 @@ public interface CustomerDAO {
 
     CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException;
 
-    public ArrayList <CustomerDTO> loadAllCustomerIds() throws SQLException, ClassNotFoundException;
+    public ArrayList <CustomerDTO> loadAllCustomerIds() throws SQLException, ClassNotFoundException;*/
 
 }
 

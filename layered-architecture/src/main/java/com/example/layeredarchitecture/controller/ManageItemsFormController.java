@@ -83,7 +83,7 @@ public class ManageItemsFormController {
 
            */
            // ItemDAO itemDAO=new ItemDAOImpl();
-            ArrayList<ItemDTO> allItem=itemDAO.loadAllItems();
+            ArrayList<ItemDTO> allItem=itemDAO.loadAll();
             for (ItemDTO dto:allItem) {
                 tblItems.getItems().add(
                         new ItemTM(dto.getCode(),
@@ -160,7 +160,7 @@ public class ManageItemsFormController {
           /* ItemDAO dao=new ItemDAOImpl();
            boolean isDeleted=dao.deleteItem(code);*/
 
-            boolean isDeleted=itemDAO.deleteItem(code);
+            boolean isDeleted=itemDAO.delete(code);
            if(isDeleted) {
                tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
                tblItems.getSelectionModel().clearSelection();
@@ -213,7 +213,7 @@ public class ManageItemsFormController {
               /*  ItemDAO dao=new ItemDAOImpl();
                 boolean isSaved=dao.saveItem(dto);*/
 
-                boolean isSaved=itemDAO.saveItem(dto);
+                boolean isSaved=itemDAO.save(dto);
                 if(isSaved) {
                     tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
                 }
@@ -239,7 +239,7 @@ public class ManageItemsFormController {
 
                   ItemDTO itemDTO=new ItemDTO(code,description,unitPrice,qtyOnHand);
                   //ItemDAO itemDAO=new ItemDAOImpl();
-                  itemDAO.updateItem(itemDTO);
+                  itemDAO.update(itemDTO);
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
                 selectedItem.setDescription(description);
@@ -267,7 +267,7 @@ public class ManageItemsFormController {
        /* ItemDAOImpl dao =new ItemDAOImpl();
         return dao.exitItem(code);*/
 
-        return itemDAO.exitItem(code);
+        return itemDAO.exit(code);
 
     }
 
@@ -279,7 +279,7 @@ public class ManageItemsFormController {
            /* ItemDAOImpl itemDAO =new ItemDAOImpl();
              ResultSet rst=itemDAO.generateId();*/
 
-            ResultSet rst=itemDAO.generateId();
+            ResultSet rst=itemDAO.generateNewId();
 
             if (rst.next()) {
                 String id = rst.getString("code");

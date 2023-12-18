@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public interface OrdersDAO {
+public interface OrdersDAO extends CrudDAO<OrdersDAO>{
      String generateOrderId() throws SQLException, ClassNotFoundException;
 
      boolean insertValueToOrders(String id, LocalDate date, String Cid) throws SQLException, ClassNotFoundException;

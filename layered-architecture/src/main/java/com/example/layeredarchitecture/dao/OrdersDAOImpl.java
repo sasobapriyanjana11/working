@@ -6,6 +6,7 @@ import com.example.layeredarchitecture.model.OrderDTO;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class OrdersDAOImpl implements OrdersDAO {
     private static Connection connection;
@@ -57,5 +58,45 @@ public class OrdersDAOImpl implements OrdersDAO {
         */
 
         sqlUtil.execute("SELECT oid FROM `Orders` WHERE oid=?",orderId);
+    }
+
+    @Override
+    public ArrayList<OrdersDAO> getAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean save(OrdersDAO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(OrdersDAO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean exit(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public ResultSet generateNewId() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public OrdersDAO search(String id) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<OrdersDAO> loadAll() throws SQLException, ClassNotFoundException {
+        return null;
     }
 }

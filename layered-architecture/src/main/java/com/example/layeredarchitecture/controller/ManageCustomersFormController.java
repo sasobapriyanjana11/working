@@ -80,7 +80,7 @@ public class ManageCustomersFormController {
             }
           */
           //  CustomerDAO customerDAO=new CustomerDAOImpl();
-            ArrayList<CustomerDTO> allCustomer=customerDAO.getAllCustomer();
+            ArrayList<CustomerDTO> allCustomer=customerDAO.getAll();
             for (CustomerDTO dto:allCustomer) {
                 tblCustomers.getItems().add(
                         new CustomerTM(dto.getId(),
@@ -171,7 +171,7 @@ public class ManageCustomersFormController {
               /*  CustomerDAO dao=new CustomerDAOImpl();
                 boolean isSaved=dao.saveCustomer(dto);*/
 
-                boolean isSaved=customerDAO.saveCustomer(dto);
+                boolean isSaved=customerDAO.save(dto);
 
                 if(isSaved) {
                     tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -200,7 +200,7 @@ public class ManageCustomersFormController {
               /*  CustomerDAO dao = new CustomerDAOImpl();
                 dao.updateCustomer(dto);*/
 
-                customerDAO.updateCustomer(dto);
+                customerDAO.update(dto);
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
             } catch (ClassNotFoundException e) {
@@ -226,7 +226,7 @@ public class ManageCustomersFormController {
      /*   CustomerDAOImpl dao=new CustomerDAOImpl();
         boolean isExist= dao.exitCustomer(id);*/
 
-        boolean isExist=customerDAO.exitCustomer(id);
+        boolean isExist=customerDAO.exit(id);
         if(isExist)
             return true;
         else
@@ -250,7 +250,7 @@ public class ManageCustomersFormController {
             customerDAO.deleteCustomer(id);
             boolean isDeleted =dao.deleteCustomer(id);*/
 
-            boolean isDeleted=customerDAO.deleteCustomer(id);
+            boolean isDeleted=customerDAO.delete(id);
 
             if(isDeleted) {
                 tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
