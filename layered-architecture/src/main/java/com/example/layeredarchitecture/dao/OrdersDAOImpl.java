@@ -21,10 +21,11 @@ public class OrdersDAOImpl implements OrdersDAO {
     }
     @Override
     public String generateOrderId() throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
+      /*  Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();
-        ResultSet rst = stm.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
+        ResultSet rst = stm.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");*/
 
+        ResultSet rst=sqlUtil.execute("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
         return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
 
     }
@@ -38,6 +39,7 @@ public class OrdersDAOImpl implements OrdersDAO {
         stm.setString(1, oid);
         stm.setDate(2, Date.valueOf(date));
         stm.setString(3, Cid);
+
         if (stm.executeUpdate() != 1) {
             connection.rollback();
             connection.setAutoCommit(true);
@@ -48,9 +50,12 @@ public class OrdersDAOImpl implements OrdersDAO {
     }
     @Override
     public void getOrderId(String orderId) throws SQLException, ClassNotFoundException {
-       Connection  connection = DBConnection.getDbConnection().getConnection();
+      /* Connection  connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
         stm.setString(1, orderId);
         stm.executeQuery().next();
+        */
+
+        sqlUtil.execute("SELECT oid FROM `Orders` WHERE oid=?",orderId);
     }
 }
