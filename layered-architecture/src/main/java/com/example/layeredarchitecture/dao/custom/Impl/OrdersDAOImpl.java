@@ -1,8 +1,8 @@
-package com.example.layeredarchitecture.dao;
+package com.example.layeredarchitecture.dao.custom.Impl;
 
+import com.example.layeredarchitecture.dao.custom.OrdersDAO;
+import com.example.layeredarchitecture.dao.sqlUtil;
 import com.example.layeredarchitecture.db.DBConnection;
-import com.example.layeredarchitecture.model.CustomerDTO;
-import com.example.layeredarchitecture.model.OrderDTO;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ public class OrdersDAOImpl implements OrdersDAO {
         Statement stm = connection.createStatement();
         ResultSet rst = stm.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");*/
 
-        ResultSet rst=sqlUtil.execute("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
+        ResultSet rst= sqlUtil.execute("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
         return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
 
     }
@@ -99,4 +99,5 @@ public class OrdersDAOImpl implements OrdersDAO {
     public ArrayList<OrdersDAO> loadAll() throws SQLException, ClassNotFoundException {
         return null;
     }
+
 }

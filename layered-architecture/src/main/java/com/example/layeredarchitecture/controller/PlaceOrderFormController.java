@@ -1,11 +1,9 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.dao.*;
+import com.example.layeredarchitecture.dao.custom.*;
+import com.example.layeredarchitecture.dao.custom.Impl.*;
 import com.example.layeredarchitecture.db.DBConnection;
-import com.example.layeredarchitecture.model.CustomerDTO;
-import com.example.layeredarchitecture.model.ItemDTO;
-import com.example.layeredarchitecture.model.OrderDTO;
-import com.example.layeredarchitecture.model.OrderDetailDTO;
+import com.example.layeredarchitecture.model.*;
 import com.example.layeredarchitecture.view.tdm.OrderDetailTM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -54,13 +52,16 @@ public class PlaceOrderFormController {
 
     CustomerDTO customerDTO=new CustomerDTO();
     ItemDTO itemDTO=new ItemDTO();
-
     OrderDTO orderDTO=new OrderDTO();
+    CustomDto customDto=new CustomDto(customerDTO.getId(),customerDTO.getName(),orderId,orderDTO.getOrderDate(),orderDTO.getOrderTotal() );
+
 
     OrderDetailsDAO orderDetailsDAO=new OrderDetailsDAOImpl();
     ItemDAO itemDAO=new ItemDAOImpl();
     CustomerDAO customerDAO=new CustomerDAOImpl();
     OrdersDAO ordersDAO=new OrdersDAOImpl();
+
+    QueryDAO queryDAO=new QueryDAOImpl();
 
     public void initialize() throws SQLException, ClassNotFoundException {
 
@@ -435,6 +436,7 @@ public class PlaceOrderFormController {
                 isUpdated = itemDAO.update(item);
 
 
+
               /* PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
                 pstm.setString(1, item.getDescription());
                 pstm.setBigDecimal(2, item.getUnitPrice());
@@ -453,6 +455,16 @@ public class PlaceOrderFormController {
                 return true;
              }*/
                 System.out.println(isOrderDetailSaved);
+
+                ////print custom dto/////
+
+                ArrayList<CustomDto> join= queryDAO.customerOrderDetails(customDto);
+                for (CustomDto dto : join) {
+                    System.out.println(dto);
+                }
+
+                //////////////////////////
+
                 if (isOrderSaved && isOrderDetailSaved && isUpdated) {
                     DBConnection.getDbConnection().getConnection().commit();
                     DBConnection.getDbConnection().getConnection().setAutoCommit(true);
