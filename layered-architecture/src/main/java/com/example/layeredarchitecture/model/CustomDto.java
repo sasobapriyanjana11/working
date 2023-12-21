@@ -62,6 +62,7 @@ public class CustomDto {
 
    /* public void setCustomerId(String customerId) {
         this.customerId = customerId;
+
     }*/
 
    /* public String getCustomerName() {
