@@ -4,7 +4,7 @@ import com.example.layeredarchitecture.dao.CrudDAO;
 import com.example.layeredarchitecture.model.CustomerDTO;
 
 public interface CustomerDAO extends CrudDAO<CustomerDTO> {
-    /*ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
+   /*ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
 
      boolean saveCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException;
 

@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class CustomDto {
-    private String id;//customer$
-    private String name;//$
-    private String orderId;//Orders *
-    private LocalDate orderDate;//*
- //   private String customerId;//*
- //   private String customerName;//*
-    private BigDecimal orderTotal;//*
+    private String id;
+    private String name;
+    private String orderId;
+    private LocalDate orderDate;
+ //   private String customerId;
+ //   private String customerName;
+    private BigDecimal orderTotal;
 
     public CustomDto( String id, String name, String orderId, LocalDate orderDate,   BigDecimal orderTotal) {
         this.id = id;
