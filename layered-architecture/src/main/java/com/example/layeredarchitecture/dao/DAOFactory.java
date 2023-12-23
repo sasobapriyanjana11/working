@@ -5,9 +5,7 @@ import com.example.layeredarchitecture.dao.custom.QueryDAO;
 
 public class DAOFactory {
     private  static DAOFactory daoFactory;
-    private DAOFactory(){
-
-    }
+    private DAOFactory(){}
 
     public static DAOFactory getDaoFactory() {
         return (daoFactory==null)?daoFactory=new DAOFactory():daoFactory;

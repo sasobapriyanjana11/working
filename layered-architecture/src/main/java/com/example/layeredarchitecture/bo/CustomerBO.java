@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface CustomerBO {
+public interface CustomerBO extends SuperBO{
    boolean saveCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException;
 
     public boolean updateCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException;

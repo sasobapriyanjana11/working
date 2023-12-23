@@ -51,7 +51,8 @@ public class PlaceOrderFormController {
     public Label lblTotal;
     private String orderId;
 
-    PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
+    //PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
+    PlaceOrderBO placeOrderBO= (PlaceOrderBO) BOFactory.getBoFactory().getType(BOFactory.getFactory1.PLACE_ORDERS);
     ItemBO itemBO=new ItemBOImpl();
     CustomerBO customerBO=new CustomerBOImpl();
 
