@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.bo;
 
+import com.example.layeredarchitecture.dao.DAOFactory;
 import com.example.layeredarchitecture.dao.custom.*;
 import com.example.layeredarchitecture.dao.custom.Impl.*;
 import com.example.layeredarchitecture.db.DBConnection;
@@ -17,13 +18,20 @@ import java.util.List;
 
 public class PlaceOrderBOImpl implements PlaceOrderBO{
     CustomDto customDto;
-    CustomerDAO customerDao=new CustomerDAOImpl();
-    ItemDAO itemDao=new ItemDAOImpl();
-    OrdersDAO ordersDao=new OrdersDAOImpl();
+     // CustomerDAO customerDao=new CustomerDAOImpl();
+    // ItemDAO itemDao=new ItemDAOImpl();
+    //OrdersDAO ordersDao=new OrdersDAOImpl();
+    // QueryDAO queryDAO=new QueryDAOImpl();
+    // OrderDetailsDAO orderDetailsDAO=new OrderDetailsDAOImpl();
 
-    OrderDetailsDAO orderDetailsDAO=new OrderDetailsDAOImpl();
+    CustomerDAO customerDAO= (CustomerDAO) DAOFactory.getDaoFactory().getType(DAOFactory.getDaoType.CUSTOMER);
+   ItemDAO itemDAO= (ItemDAO) DAOFactory.getDaoFactory().getType(DAOFactory.getDaoType.ITEM);
 
-    QueryDAO queryDAO=new QueryDAOImpl();
+    OrdersDAO ordersDAO= (OrdersDAO)  DAOFactory.getDaoFactory().getType(DAOFactory.getDaoType.ORDERS);
+
+    OrderDetailsDAO orderDetailsDAO= (OrderDetailsDAO) DAOFactory.getDaoFactory().getType(DAOFactory.getDaoType.ORDER_DETAILS);
+    QueryDAO queryDAO= (QueryDAO) DAOFactory.getDaoFactory().getType(DAOFactory.getDaoType.QUERYDAO);
+
 
     @Override
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException {
@@ -40,8 +48,8 @@ public class PlaceOrderBOImpl implements PlaceOrderBO{
             /*if order id already exist*/
             if (stm.executeQuery().next()) {}
 
-            ordersDao.getOrderId(orderId);
-            isOrderSaved = ordersDao.insertValueToOrders(orderId, orderDate, customerId);
+            ordersDAO.getOrderId(orderId);
+            isOrderSaved = ordersDAO.insertValueToOrders(orderId, orderDate, customerId);
 
             connection.setAutoCommit(false);
 
@@ -83,7 +91,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO{
                 // ItemDTO item = findItem(detail.getItemCode());
                 // item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
-                isUpdated = itemDao.update(item);
+                isUpdated = itemDAO.update(item);
 
 
 
@@ -132,57 +140,57 @@ public class PlaceOrderBOImpl implements PlaceOrderBO{
 
     @Override
     public String generateOrderId() throws SQLException, ClassNotFoundException {
-        return ordersDao.generateOrderId();
+        return ordersDAO.generateOrderId();
     }
 
     @Override
     public boolean insertValueToOrders(String oid, LocalDate date, String Cid) throws SQLException, ClassNotFoundException {
-        return ordersDao.insertValueToOrders(oid,date,Cid);
+        return ordersDAO.insertValueToOrders(oid,date,Cid);
     }
 
     @Override
     public void getOrderId(String orderId) throws SQLException, ClassNotFoundException {
-       ordersDao.generateOrderId();
+       ordersDAO.generateOrderId();
     }
 
     @Override
     public ArrayList<OrdersDAO> getAll() throws SQLException, ClassNotFoundException {
-        return ordersDao.getAll();
+        return ordersDAO.getAll();
     }
 
     @Override
     public boolean save(OrdersDAO dto) throws SQLException, ClassNotFoundException {
-        return ordersDao.save(dto);
+        return ordersDAO.save(dto);
     }
 
     @Override
     public boolean update(OrdersDAO dto) throws SQLException, ClassNotFoundException {
-        return ordersDao.update(dto);
+        return ordersDAO.update(dto);
     }
 
     @Override
     public boolean exit(String id) throws SQLException, ClassNotFoundException {
-        return ordersDao.exit(id);
+        return ordersDAO.exit(id);
     }
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return ordersDao.exit(id);
+        return ordersDAO.exit(id);
     }
 
     @Override
     public ResultSet generateNewId() throws SQLException, ClassNotFoundException {
-        return ordersDao.generateNewId();
+        return ordersDAO.generateNewId();
     }
 
     @Override
     public OrdersDAO search(String id) throws SQLException, ClassNotFoundException {
-        return ordersDao.search(id);
+        return ordersDAO.search(id);
     }
 
     @Override
     public ArrayList<OrdersDAO> loadAll() throws SQLException, ClassNotFoundException {
-        return ordersDao.loadAll();
+        return ordersDAO.loadAll();
     }
 
     @Override
@@ -199,7 +207,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO{
             rst.next();
               return new ItemDTO(code, rst.getString("description"), rst.getBigDecimal("unitPrice"), rst.getInt("qtyOnHand"));*/
 
-            ItemDTO itemDTO=  itemDao.search(code);
+            ItemDTO itemDTO=  itemDAO.search(code);
             return new ItemDTO(code,itemDTO.getDescription(),itemDTO.getUnitPrice(),itemDTO.getQtyOnHand());
 
         } catch (SQLException e) {
