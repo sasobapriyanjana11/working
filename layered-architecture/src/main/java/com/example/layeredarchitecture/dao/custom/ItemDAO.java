@@ -12,7 +12,7 @@ public interface ItemDAO extends CrudDAO<ItemDTO> {
 
      boolean deleteItem(String code) throws SQLException, ClassNotFoundException ;
 
-    boolean updateItem(ItemDTO dto) throws SQLException, ClassNotFoundException ;
+     boolean updateItem(ItemDTO dto) throws SQLException, ClassNotFoundException ;
 
      ResultSet generateId() throws SQLException, ClassNotFoundException ;
 

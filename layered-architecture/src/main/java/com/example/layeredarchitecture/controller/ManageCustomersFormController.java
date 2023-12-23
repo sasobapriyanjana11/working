@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.CustomerBO;
+import com.example.layeredarchitecture.bo.CustomerBOImpl;
 import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.dao.custom.Impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.model.CustomerDTO;
@@ -38,7 +40,9 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    CustomerDAO customerDAO=new CustomerDAOImpl(); //property injection
+    //CustomerDAO customerDAO=new CustomerDAOImpl(); //property injection
+
+    CustomerBO customerBO=new CustomerBOImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -79,7 +83,7 @@ public class ManageCustomersFormController {
             }
           */
           //  CustomerDAO customerDAO=new CustomerDAOImpl();
-            ArrayList<CustomerDTO> allCustomer=customerDAO.getAll();
+            ArrayList<CustomerDTO> allCustomer=customerBO.getAllCustomer();
             for (CustomerDTO dto:allCustomer) {
                 tblCustomers.getItems().add(
                         new CustomerTM(dto.getId(),
@@ -170,7 +174,10 @@ public class ManageCustomersFormController {
               /*  CustomerDAO dao=new CustomerDAOImpl();
                 boolean isSaved=dao.saveCustomer(dto);*/
 
-                boolean isSaved=customerDAO.save(dto);
+              //  boolean isSaved=customerDAO.save(dto);
+
+                CustomerBOImpl customerBO=new CustomerBOImpl();
+                boolean isSaved=customerBO.saveCustomer(dto);
 
                 if(isSaved) {
                     tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -199,7 +206,7 @@ public class ManageCustomersFormController {
               /*  CustomerDAO dao = new CustomerDAOImpl();
                 dao.updateCustomer(dto);*/
 
-                customerDAO.update(dto);
+               customerBO.updateCustomer(dto);
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
             } catch (ClassNotFoundException e) {
@@ -225,7 +232,7 @@ public class ManageCustomersFormController {
      /*   CustomerDAOImpl dao=new CustomerDAOImpl();
         boolean isExist= dao.exitCustomer(id);*/
 
-        boolean isExist=customerDAO.exit(id);
+        boolean isExist=customerBO.exitCustomer(id);
         if(isExist)
             return true;
         else
@@ -249,7 +256,7 @@ public class ManageCustomersFormController {
             customerDAO.deleteCustomer(id);
             boolean isDeleted =dao.deleteCustomer(id);*/
 
-            boolean isDeleted=customerDAO.delete(id);
+            boolean isDeleted=customerBO.deleteCustomer(id);
 
             if(isDeleted) {
                 tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
@@ -272,7 +279,7 @@ public class ManageCustomersFormController {
           /*  CustomerDAO customerDAO = new CustomerDAOImpl();
             ResultSet rst = customerDAO.generateNewId();*/
 
-            ResultSet rst=customerDAO.generateNewId();
+            ResultSet rst=customerBO.generateNewId();
             if (rst.next()) {
                 String id = rst.getString("id");
                 int newCustomerId = Integer.parseInt(id.replace("C00-", "")) + 1;

@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.ItemBO;
+import com.example.layeredarchitecture.bo.ItemBOImpl;
 import com.example.layeredarchitecture.dao.custom.ItemDAO;
 import com.example.layeredarchitecture.dao.custom.Impl.ItemDAOImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -37,7 +39,8 @@ public class ManageItemsFormController {
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
-    ItemDAO itemDAO=new ItemDAOImpl();
+   // ItemDAO itemDAO=new ItemDAOImpl();
+    ItemBO itemBO=new ItemBOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -79,7 +82,7 @@ public class ManageItemsFormController {
 
            */
            // ItemDAO itemDAO=new ItemDAOImpl();
-            ArrayList<ItemDTO> allItem=itemDAO.loadAll();
+            ArrayList<ItemDTO> allItem=itemBO.loadAllItem();
             for (ItemDTO dto:allItem) {
                 tblItems.getItems().add(
                         new ItemTM(dto.getCode(),
@@ -156,7 +159,7 @@ public class ManageItemsFormController {
           /* ItemDAO dao=new ItemDAOImpl();
            boolean isDeleted=dao.deleteItem(code);*/
 
-            boolean isDeleted=itemDAO.delete(code);
+            boolean isDeleted=itemBO.deleteItem(code);
            if(isDeleted) {
                tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
                tblItems.getSelectionModel().clearSelection();
@@ -209,7 +212,7 @@ public class ManageItemsFormController {
               /*  ItemDAO dao=new ItemDAOImpl();
                 boolean isSaved=dao.saveItem(dto);*/
 
-                boolean isSaved=itemDAO.save(dto);
+                boolean isSaved=itemBO.saveItem(dto);
                 if(isSaved) {
                     tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
                 }
@@ -235,7 +238,7 @@ public class ManageItemsFormController {
 
                   ItemDTO itemDTO=new ItemDTO(code,description,unitPrice,qtyOnHand);
                   //ItemDAO itemDAO=new ItemDAOImpl();
-                  itemDAO.update(itemDTO);
+                  itemBO.updateItem(itemDTO);
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
                 selectedItem.setDescription(description);
@@ -263,7 +266,7 @@ public class ManageItemsFormController {
        /* ItemDAOImpl dao =new ItemDAOImpl();
         return dao.exitItem(code);*/
 
-        return itemDAO.exit(code);
+        return itemBO.exitItem(code);
 
     }
 
@@ -275,7 +278,7 @@ public class ManageItemsFormController {
            /* ItemDAOImpl itemDAO =new ItemDAOImpl();
              ResultSet rst=itemDAO.generateId();*/
 
-            ResultSet rst=itemDAO.generateNewId();
+            ResultSet rst=itemBO.generateNewId();
 
             if (rst.next()) {
                 String id = rst.getString("code");
